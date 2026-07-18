@@ -20,41 +20,41 @@ enum GearCondition {
     GOOD
     USED
 
-  @@map("gear_condition")
+    @@map("gear_condition")
 }
 
 enum ApprovalStatus {
-  PENDING
-  APPROVED
-  REJECTED
+    PENDING
+    APPROVED
+    REJECTED
 
-  @@map("approval_status")
+    @@map("approval_status")
 }
 
 enum RentalStatus {
-  PLACED
-  CONFIRMED
-  PAID
-  PICKED_UP
-  RETURNED
-  CANCELLED
-  REJECTED
+    PLACED
+    CONFIRMED
+    PAID
+    PICKED_UP
+    RETURNED
+    CANCELLED
+    REJECTED
 
-  @@map("rental_status")
+    @@map("rental_status")
 }
 
 enum PaymentStatus {
-  PENDING
-  SUCCESS
-  FAILED
-  REFUNDED
+    PENDING
+    SUCCESS
+    FAILED
+    REFUNDED
 
-  @@map("payment_status")
+    @@map("payment_status")
 }
 
 enum PaymentProvider {
-  STRIPE
-  SSLCOMMERZ
+    STRIPE
+    SSLCOMMERZ
 
-  @@map("payment_provider")
+    @@map("payment_provider")
 }

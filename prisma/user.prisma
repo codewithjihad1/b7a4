@@ -1,0 +1,30 @@
+model User {
+    id          String   @id @default(uuid()) @db.Uuid
+    name        String   @db.VarChar(100)
+    email       String   @unique @db.VarChar(255)
+    password    String
+    phone       String?  @db.VarChar(20)
+    avatar      String?
+    role        UserRole
+    status      UserStatus @default(ACTIVE)
+    isVerified  Boolean  @default(false)
+
+    address     String?
+    city        String?  @db.VarChar(100)
+    country     String?  @default("Bangladesh") @db.VarChar(100)
+
+    providerProfile ProviderProfile?
+
+    gearItems       GearItem[]
+
+    customerOrders  RentalOrder[] @relation("CustomerOrders")
+    providerOrders  RentalOrder[] @relation("ProviderOrders")
+
+    payments        Payment[]
+    reviews         Review[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("users")
+}
