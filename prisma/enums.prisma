@@ -1,0 +1,60 @@
+
+enum UserRole {
+    CUSTOMER
+    PROVIDER
+    ADMIN
+
+    @@map("user_role")
+}
+
+enum UserStatus {
+    ACTIVE
+    SUSPENDED
+    PENDING
+
+    @@map("user_status")
+}
+
+enum GearCondition {
+    NEW
+    GOOD
+    USED
+
+  @@map("gear_condition")
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+
+  @@map("approval_status")
+}
+
+enum RentalStatus {
+  PLACED
+  CONFIRMED
+  PAID
+  PICKED_UP
+  RETURNED
+  CANCELLED
+  REJECTED
+
+  @@map("rental_status")
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+
+  @@map("payment_status")
+}
+
+enum PaymentProvider {
+  STRIPE
+  SSLCOMMERZ
+
+  @@map("payment_provider")
+}

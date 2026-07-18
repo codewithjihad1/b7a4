@@ -1,0 +1,16 @@
+model User {
+    id String @id @default(uuid())
+    name String @db.VarChar(100)
+    email String @unique @db.VarChar(255)
+    password String 
+    phone String? @db.VarChar(20)
+    avatar String?
+    role UserRole @default(CUSTOMER)
+    status UserStatus @default(ACTIVE)
+    is_verified Boolean @default(false)
+    address String?
+    city String? @db.VarChar(100)
+    country String? @db.VarChar(100)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
