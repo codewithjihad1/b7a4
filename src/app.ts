@@ -1,14 +1,36 @@
 import cors from "cors";
 import express from "express";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import { env } from "./config/env.js";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
 
+app.use(helmet());
+app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
+app.use(
+    rateLimit({
+        windowMs: 15 * 60 * 1000,
+        max: 100,
+        message: { success: false, message: "Too many requests, try again later" },
+        standardHeaders: true,
+        legacyHeaders: false,
+    }),
+);
+
+app.get("/health", (_req, res) => {
+    res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
+
+// Routes will be registered here
+// app.use("/api/v1/auth", authRoutes);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;
