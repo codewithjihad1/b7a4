@@ -5,6 +5,7 @@ import rateLimit from "express-rate-limit";
 import { env } from "./config/env.js";
 import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import authRoutes from "./modules/auth/auth.routes.js";
 
 const app = express();
 
@@ -27,8 +28,7 @@ app.get("/health", (_req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Routes will be registered here
-// app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
