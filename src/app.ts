@@ -10,6 +10,7 @@ import userRoutes from "./modules/user/user.routes.js";
 import categoryRoutes from "./modules/category/category.routes.js";
 import providerRoutes from "./modules/provider/provider.routes.js";
 import gearRoutes from "./modules/gear/gear.routes.js";
+import rentalRoutes from "./modules/rental/rental.routes.js";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/providers", providerRoutes);
 app.use("/api/v1/gear", gearRoutes);
+app.use("/api/v1/rentals", rentalRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
