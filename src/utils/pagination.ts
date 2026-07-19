@@ -5,12 +5,10 @@ interface PaginationQuery {
     limit?: string | number;
 }
 
-interface PaginationInput {
-    page?: number;
-    limit?: number;
-}
-
-export const parsePagination = (query: PaginationInput) => {
+export const parsePagination = (query: {
+    page?: number | undefined;
+    limit?: number | undefined;
+}) => {
     const page = Math.max(1, Number(query.page) || PAGINATION.DEFAULT_PAGE);
     const limit = Math.min(
         PAGINATION.MAX_LIMIT,

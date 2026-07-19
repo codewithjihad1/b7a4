@@ -28,8 +28,8 @@ export const validate = (
         };
 
         if (data.body !== undefined) req.body = data.body;
-        if (data.query !== undefined) req.query = data.query as typeof req.query;
-        if (data.params !== undefined) req.params = data.params as typeof req.params;
+        // Express 5 makes req.query and req.params read-only getters,
+        // so we only validate them (throw on bad input) without reassigning.
 
         next();
     };
