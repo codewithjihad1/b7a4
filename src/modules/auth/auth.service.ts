@@ -71,7 +71,7 @@ export const login = async (data: LoginInput) => {
     }
 
     if (user.status === "SUSPENDED") {
-        throw new UnauthorizedError("Your account has been suspended");
+        throw new UnauthorizedError("Invalid email or password");
     }
 
     const isPasswordValid = await comparePassword(data.password, user.password);
