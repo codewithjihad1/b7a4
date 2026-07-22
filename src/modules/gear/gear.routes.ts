@@ -14,8 +14,60 @@ import * as gearController from "./gear.controller.js";
 
 const router = Router();
 
-// Public
+/**
+ * @swagger
+ * /gear:
+ *   get:
+ *     summary: Browse gear (public)
+ *     tags: [Gear]
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         schema: { type: string }
+ *       - in: query
+ *         name: categoryId
+ *         schema: { type: string, format: uuid }
+ *       - in: query
+ *         name: minPrice
+ *         schema: { type: number }
+ *       - in: query
+ *         name: maxPrice
+ *         schema: { type: number }
+ *       - in: query
+ *         name: condition
+ *         schema: { type: string, enum: [NEW, GOOD, USED] }
+ *       - in: query
+ *         name: sort
+ *         schema: { type: string, enum: [price_asc, price_desc, newest, rating] }
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, default: 1 }
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, default: 10 }
+ *     responses:
+ *       200:
+ *         description: List of gear items
+ */
 router.get("/", validate(browseGearSchema), catchAsync(gearController.browse));
+
+/**
+ * @swagger
+ * /gear/{id}:
+ *   get:
+ *     summary: Get gear by ID (public)
+ *     tags: [Gear]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string, format: uuid }
+ *     responses:
+ *       200:
+ *         description: Gear details
+ *       404:
+ *         description: Gear not found
+ */
 router.get(
     "/:id",
     validate(gearIdParamSchema),
@@ -30,6 +82,36 @@ router.get(
     catchAsync(gearController.getProviderGear),
 );
 
+/**
+ * @swagger
+ * /gear:
+ *   post:
+ *     summary: Create gear item (Provider only)
+ *     tags: [Gear]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [title, categoryId, brand, description, dailyRentPrice, securityDeposit, stockQuantity, condition]
+ *             properties:
+ *               title: { type: string }
+ *               categoryId: { type: string, format: uuid }
+ *               brand: { type: string }
+ *               description: { type: string }
+ *               dailyRentPrice: { type: number }
+ *               securityDeposit: { type: number }
+ *               stockQuantity: { type: integer }
+ *               condition: { type: string, enum: [NEW, GOOD, USED] }
+ *     responses:
+ *       201:
+ *         description: Gear created
+ *       401:
+ *         description: Unauthorized
+ */
 router.post(
     "/",
     authenticate,
