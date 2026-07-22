@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { sendResponse } from "../../utils/sendResponse.js";
 import { SUCCESS_MESSAGES } from "../../config/constants.js";
+import { sendResponse } from "../../utils/sendResponse.js";
 import * as authService from "./auth.service.js";
 
 export const register = async (req: Request, res: Response) => {
@@ -14,6 +14,10 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
     const result = await authService.login(req.body);
+
+    res.cookie("refreshToken", result.refreshToken);
+    res.cookie("accessToken", result.accessToken);
+
     sendResponse(res, {
         message: SUCCESS_MESSAGES.LOGIN,
         data: result,
@@ -21,9 +25,7 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const refreshToken = async (req: Request, res: Response) => {
-    const result = await authService.refreshAccessToken(
-        req.body.refreshToken,
-    );
+    const result = await authService.refreshAccessToken(req.body.refreshToken);
     sendResponse(res, {
         message: SUCCESS_MESSAGES.TOKEN_REFRESHED,
         data: result,
