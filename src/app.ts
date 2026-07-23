@@ -1,22 +1,22 @@
 import cors from "cors";
 import express, { raw } from "express";
-import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 import swaggerUi from "swagger-ui-express";
 import { env } from "./config/env.js";
 import { swaggerSpec } from "./config/swagger.js";
-import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
-import authRoutes from "./modules/auth/auth.routes.js";
-import userRoutes from "./modules/user/user.routes.js";
-import categoryRoutes from "./modules/category/category.routes.js";
-import providerRoutes from "./modules/provider/provider.routes.js";
-import gearRoutes from "./modules/gear/gear.routes.js";
-import rentalRoutes from "./modules/rental/rental.routes.js";
-import paymentRoutes from "./modules/payment/payment.routes.js";
-import reviewRoutes from "./modules/review/review.routes.js";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import adminRoutes from "./modules/admin/admin.routes.js";
+import authRoutes from "./modules/auth/auth.routes.js";
+import categoryRoutes from "./modules/category/category.routes.js";
+import gearRoutes from "./modules/gear/gear.routes.js";
+import paymentRoutes from "./modules/payment/payment.routes.js";
+import providerRoutes from "./modules/provider/provider.routes.js";
+import rentalRoutes from "./modules/rental/rental.routes.js";
+import reviewRoutes from "./modules/review/review.routes.js";
 import uploadRoutes from "./modules/upload/upload.routes.js";
+import userRoutes from "./modules/user/user.routes.js";
 
 const app = express();
 
@@ -33,7 +33,10 @@ app.use(
     rateLimit({
         windowMs: 15 * 60 * 1000,
         max: 100,
-        message: { success: false, message: "Too many requests, try again later" },
+        message: {
+            success: false,
+            message: "Too many requests, try again later",
+        },
         standardHeaders: true,
         legacyHeaders: false,
     }),
